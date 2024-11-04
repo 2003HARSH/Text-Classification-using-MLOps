@@ -8,3 +8,4 @@ pandas
 mlflow
 dagshub
 nltk
+xgboost
