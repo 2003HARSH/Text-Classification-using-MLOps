@@ -9,11 +9,11 @@ stages:
       size: 3562
     params:
       params.yaml:
-        data_ingestion.test_size: 0.1
+        data_ingestion.test_size: 0.2
     outs:
     - path: data/raw
       hash: md5
-      md5: baa43b70a6a4c8dac10639c6b987a43a.dir
+      md5: fb326d2eec197669f9638afde28356bf.dir
       size: 827973
       nfiles: 2
   data_preprocessing:
@@ -21,7 +21,7 @@ stages:
     deps:
     - path: data/raw
       hash: md5
-      md5: baa43b70a6a4c8dac10639c6b987a43a.dir
+      md5: fb326d2eec197669f9638afde28356bf.dir
       size: 827973
       nfiles: 2
     - path: src/data/data_preprocessing.py
@@ -31,7 +31,7 @@ stages:
     outs:
     - path: data/interim
       hash: md5
-      md5: 8323d2d9d3c35c0cc7848fdcf20b1398.dir
+      md5: c52f2290e848623bebee2a4c7bcf41e3.dir
       size: 572633
       nfiles: 2
   feature_engineering:
@@ -39,7 +39,7 @@ stages:
     deps:
     - path: data/interim
       hash: md5
-      md5: 8323d2d9d3c35c0cc7848fdcf20b1398.dir
+      md5: c52f2290e848623bebee2a4c7bcf41e3.dir
       size: 572633
       nfiles: 2
     - path: src/features/feature_engineering.py
@@ -48,24 +48,24 @@ stages:
       size: 3885
     params:
       params.yaml:
-        feature_engineering.max_features: 500
+        feature_engineering.max_features: 1000
     outs:
     - path: data/processed
       hash: md5
-      md5: bf3191341d08d67a21eb2d29292faf72.dir
-      size: 10408916
+      md5: 72e963a0d185171533303f53e59b1344.dir
+      size: 20786916
       nfiles: 2
     - path: models/vectorizer.pkl
       hash: md5
-      md5: 57fbf5551c0e31680f045160e1e022b6
-      size: 13858
+      md5: 41920743a958f9a7d7fcc4ad764790a4
+      size: 27450
   model_building:
     cmd: python src/model/model_building.py
     deps:
     - path: data/processed
       hash: md5
-      md5: bf3191341d08d67a21eb2d29292faf72.dir
-      size: 10408916
+      md5: 72e963a0d185171533303f53e59b1344.dir
+      size: 20786916
       nfiles: 2
     - path: src/model/model_building.py
       hash: md5
@@ -74,8 +74,8 @@ stages:
     outs:
     - path: models/model.pkl
       hash: md5
-      md5: f2c3fb19f96137787d3131bc4dab376b
-      size: 4717
+      md5: ef75b36c0f72f6e816bf546b2dd25024
+      size: 8717
   model_evaluation:
     cmd: python src/model/model_evaluation.py
     deps:
