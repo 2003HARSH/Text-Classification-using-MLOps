@@ -14,8 +14,8 @@ logger.setLevel('DEBUG')
 console_handler = logging.StreamHandler()
 console_handler.setLevel('DEBUG')
 
-file_handler = logging.FileHandler('model_building_errors.log')
-file_handler.setLevel('ERROR')
+file_handler = logging.FileHandler('././logs/model_building.log')
+file_handler.setLevel('DEBUG')
 
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 console_handler.setFormatter(formatter)

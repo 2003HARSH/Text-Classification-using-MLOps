@@ -1,4 +1,4 @@
 [core]
-    remote = myremote
-['remote "myremote"']
-    url = C:\Users\harsh\AppData\Local\Temp
+    remote = text-classification-using-mlops
+['remote "text-classification-using-mlops"']
+    url = s3://text-classification-using-mlops

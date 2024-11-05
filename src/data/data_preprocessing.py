@@ -17,8 +17,8 @@ logger.setLevel('DEBUG')
 console_handler = logging.StreamHandler()
 console_handler.setLevel('DEBUG')
 
-file_handler = logging.FileHandler('transformation_errors.log')
-file_handler.setLevel('ERROR')
+file_handler = logging.FileHandler('././logs/data-preprocessing.log')
+file_handler.setLevel('DEBUG')
 
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 console_handler.setFormatter(formatter)

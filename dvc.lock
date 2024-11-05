@@ -5,15 +5,15 @@ stages:
     deps:
     - path: src/data/data_ingestion.py
       hash: md5
-      md5: ee08a4c31ae467cebbcce70b5cc5491a
-      size: 3545
+      md5: 4d839b32b595c2a2e56acacabbd398b7
+      size: 3562
     params:
       params.yaml:
-        data_ingestion.test_size: 0.1
+        data_ingestion.test_size: 0.2
     outs:
     - path: data/raw
       hash: md5
-      md5: baa43b70a6a4c8dac10639c6b987a43a.dir
+      md5: fb326d2eec197669f9638afde28356bf.dir
       size: 827973
       nfiles: 2
   data_preprocessing:
@@ -21,17 +21,17 @@ stages:
     deps:
     - path: data/raw
       hash: md5
-      md5: baa43b70a6a4c8dac10639c6b987a43a.dir
+      md5: fb326d2eec197669f9638afde28356bf.dir
       size: 827973
       nfiles: 2
     - path: src/data/data_preprocessing.py
       hash: md5
-      md5: c1e18bf95fcc1e3d80cae9ee7c4a6383
-      size: 4014
+      md5: c4e841a801f311a9f4906f07c6b0bcc2
+      size: 4020
     outs:
     - path: data/interim
       hash: md5
-      md5: 8323d2d9d3c35c0cc7848fdcf20b1398.dir
+      md5: c52f2290e848623bebee2a4c7bcf41e3.dir
       size: 572633
       nfiles: 2
   feature_engineering:
@@ -39,26 +39,26 @@ stages:
     deps:
     - path: data/interim
       hash: md5
-      md5: 8323d2d9d3c35c0cc7848fdcf20b1398.dir
+      md5: c52f2290e848623bebee2a4c7bcf41e3.dir
       size: 572633
       nfiles: 2
     - path: src/features/feature_engineering.py
       hash: md5
-      md5: c1888aef256c204017522c2ce5fd36a0
-      size: 3883
+      md5: 5f38ede9fbeab0ff38341c158984b8e7
+      size: 3885
     params:
       params.yaml:
         feature_engineering.max_features: 500
     outs:
     - path: data/processed
       hash: md5
-      md5: bf3191341d08d67a21eb2d29292faf72.dir
+      md5: 954bbac86e822e31a17d8379e9b5b964.dir
       size: 10408916
       nfiles: 2
     - path: models/vectorizer.pkl
       hash: md5
-      md5: 449bdb77e9d80cd9df307875454346f4
-      size: 13858
+      md5: 6be5505516ff20fd399f62cdbc3fda0c
+      size: 13855
   model_building:
     cmd: python src/model/model_building.py
     deps:
