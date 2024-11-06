@@ -11,3 +11,4 @@ nltk
 xgboost
 dvc[s3]
 awscli
+flask
