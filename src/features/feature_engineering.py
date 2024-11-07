@@ -100,8 +100,8 @@ def main():
         data_path = os.path.join("./data", "processed")
         os.makedirs(data_path, exist_ok=True)
         
-        train_df.to_csv(os.path.join(data_path, "train_processed.csv"), index=False)
-        test_df.to_csv(os.path.join(data_path, "test_processed.csv"), index=False)
+        train_df.to_csv(os.path.join(data_path, "train_bow.csv"), index=False)
+        test_df.to_csv(os.path.join(data_path, "test_bow.csv"), index=False)
         logger.debug('Data saved to %s', data_path)
 
     except Exception as e:
