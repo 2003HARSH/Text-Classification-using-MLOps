@@ -9,6 +9,7 @@ mlflow
 dagshub
 nltk
 xgboost
+boto3
 dvc[s3]
 awscli
 flask
