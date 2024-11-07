@@ -126,6 +126,9 @@ def main():
             y_test = test_data.iloc[:, -1].values
 
             metrics = evaluate_model(clf, X_test, y_test)
+
+            path = os.path.join("./reports")
+            os.makedirs(path, exist_ok=True)
             
             save_metrics(metrics, 'reports/metrics.json')
             
