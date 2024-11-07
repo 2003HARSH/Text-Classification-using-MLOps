@@ -104,7 +104,7 @@ def main():
         train_processed_data = normalize_text(train_data)
         test_processed_data = normalize_text(test_data)
 
-        # Store the data inside data/processed
+        # Store the data inside data/interim
         data_path = os.path.join("./data", "interim")
         os.makedirs(data_path, exist_ok=True)
         

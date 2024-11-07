@@ -84,15 +84,15 @@ def apply_bow(train_data: pd.DataFrame, test_data: pd.DataFrame, max_features: i
         logger.error('Error during Bag of Words transformation: %s', e)
         raise
 
-def save_data(df: pd.DataFrame, file_path: str) -> None:
-    """Save the dataframe to a CSV file."""
-    try:
-        os.makedirs(os.path.dirname(file_path), exist_ok=True)
-        df.to_csv(file_path, index=False)
-        logger.debug('Data saved to %s', file_path)
-    except Exception as e:
-        logger.error('Unexpected error occurred while saving the data: %s', e)
-        raise
+# def save_data(df: pd.DataFrame, file_path: str) -> None:
+#     """Save the dataframe to a CSV file."""
+#     try:
+#         os.makedirs(os.path.dirname(file_path), exist_ok=True)
+#         df.to_csv(file_path, index=False)
+#         logger.debug('Data saved to %s', file_path)
+#     except Exception as e:
+#         logger.error('Unexpected error occurred while saving the data: %s', e)
+#         raise
 
 def main():
     try:
@@ -104,8 +104,14 @@ def main():
 
         train_df, test_df = apply_bow(train_data, test_data, max_features)
 
-        save_data(train_df, os.path.join("./data", "processed", "train_bow.csv"))
-        save_data(test_df, os.path.join("./data", "processed", "test_bow.csv"))
+        # Store the data inside data/processed
+        data_path = os.path.join("./data", "processed")
+        os.makedirs(data_path, exist_ok=True)
+        
+        train_df.to_csv(os.path.join(data_path, "train_processed.csv"), index=False)
+        test_df.to_csv(os.path.join(data_path, "test_processed.csv"), index=False)
+        logger.debug('Data saved to %s', data_path)
+
     except Exception as e:
         logger.error('Failed to complete the feature engineering process: %s', e)
         print(f"Error: {e}")
