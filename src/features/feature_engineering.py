@@ -74,8 +74,9 @@ def apply_bow(train_data: pd.DataFrame, test_data: pd.DataFrame, max_features: i
         test_df = pd.DataFrame(X_test_bow.toarray())
         test_df['label'] = y_test
 
+        path = os.path.join("./models")
+        os.makedirs(path, exist_ok=True)
         pickle.dump(vectorizer, open('models/vectorizer.pkl', 'wb'))
-
 
 
         logger.debug('Bag of Words applied and data transformed')
@@ -84,15 +85,6 @@ def apply_bow(train_data: pd.DataFrame, test_data: pd.DataFrame, max_features: i
         logger.error('Error during Bag of Words transformation: %s', e)
         raise
 
-# def save_data(df: pd.DataFrame, file_path: str) -> None:
-#     """Save the dataframe to a CSV file."""
-#     try:
-#         os.makedirs(os.path.dirname(file_path), exist_ok=True)
-#         df.to_csv(file_path, index=False)
-#         logger.debug('Data saved to %s', file_path)
-#     except Exception as e:
-#         logger.error('Unexpected error occurred while saving the data: %s', e)
-#         raise
 
 def main():
     try:
