@@ -5,7 +5,6 @@ import mlflow
 import pickle
 import os
 import pandas as pd
-from preprocessing_utility import normalize_text
 import numpy as np
 import re
 import nltk
