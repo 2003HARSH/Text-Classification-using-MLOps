@@ -90,4 +90,4 @@ jobs:
             docker pull 843369994444.dkr.ecr.eu-north-1.amazonaws.com/text-classification:latest
             docker stop text-classification || true
             docker rm text-classification || true
-            docker run -d -p 80:5000 -e DAGSHUB_PAT= ${{ secrets.DAGSHUB_PAT }} --name text-classification 843369994444.dkr.ecr.eu-north-1.amazonaws.com/text-classification:v1
+            docker run -d -p 80:5000 -e DAGSHUB_PAT= ${{ secrets.DAGSHUB_PAT }} --name text-classification 843369994444.dkr.ecr.eu-north-1.amazonaws.com/text-classification:latest
