@@ -1,15 +1,30 @@
-FROM python:3.10-slim
+#multistage build to reduce image size
+
+FROM python:3.10 AS build
 
 WORKDIR /app
 
-COPY flask_app/ /app/
+COPY flask_app/requirements.txt /app/
 
+#install only neccessary libraries
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY flask_app/ /app/
 COPY models/vectorizer.pkl /app/models/vectorizer.pkl
 
-RUN pip install -r requirements.txt
+RUN python -m nltk.downloader stopwords wordnet
 
-RUN python -m nltk.downloader stopwords wordnet 
+#--------------------------------------------------------------------------------------------
+
+FROM python:3.10-slim AS final
+
+WORKDIR /app
+
+#copy only neccesary files from the build stage
+COPY --from=build /app /app
+
+RUN pip install gunicorn
 
 EXPOSE 5000
 
-CMD ["python","app.py"]
+CMD ["gunicorn","--bind","0.0.0.0:5000","--timeout","120","app:app"]
