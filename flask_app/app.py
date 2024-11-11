@@ -1,5 +1,3 @@
-# updated app.py
-
 from flask import Flask, render_template,request
 import mlflow
 import pickle
@@ -7,7 +5,6 @@ import os
 import pandas as pd
 import numpy as np
 import re
-import nltk
 import string
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
