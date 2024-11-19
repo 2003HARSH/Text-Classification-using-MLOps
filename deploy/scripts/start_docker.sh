@@ -1,7 +1,6 @@
 #!/bin/bash
 # Login to AWS ECR
-aws ecr get-login-password --region ap-southeast-2 | docker login --username AWS --password-stdin 843369994444.dkr.ecr.eu-north-1.amazonaws.com/text-classification:v3
-
+aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 843369994444.dkr.ecr.eu-north-1.amazonaws.com
 # Pull the latest image
 docker pull 843369994444.dkr.ecr.eu-north-1.amazonaws.com/text-classification:v3
 
