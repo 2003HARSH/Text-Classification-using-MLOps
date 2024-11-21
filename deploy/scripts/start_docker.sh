@@ -4,13 +4,13 @@ aws ecr get-login-password --region eu-north-1 | docker login --username AWS --p
 # Pull the latest image
 docker pull 843369994444.dkr.ecr.eu-north-1.amazonaws.com/text-classification:v3
 
-# Check if the container 'campusx-app' is running
+# Check if the container 'text-classification' is running
 if [ "$(docker ps -q -f name=text-classification)" ]; then
     # Stop the running container
     docker stop text-classification
 fi
 
-# Check if the container 'campusx-app' exists (stopped or running)
+# Check if the container 'text-classification' exists (stopped or running)
 if [ "$(docker ps -aq -f name=text-classification)" ]; then
     # Remove the container if it exists
     docker rm text-classification

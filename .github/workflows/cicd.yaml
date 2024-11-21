@@ -63,33 +63,42 @@ jobs:
       
       - name: Tag Docker Image
         run: |
-          docker tag text-classification:latest 843369994444.dkr.ecr.eu-north-1.amazonaws.com/text-classification:latest
+          docker tag text-classification:latest 843369994444.dkr.ecr.eu-north-1.amazonaws.com/text-classification:v3
       
       - name: Push Docker Image to AWS ECR
         run: |
-          docker push 843369994444.dkr.ecr.eu-north-1.amazonaws.com/text-classification:latest
+          docker push 843369994444.dkr.ecr.eu-north-1.amazonaws.com/text-classification:v3
 
 
-  Deploy-to-EC2:
-    runs-on: ubuntu-latest
-    needs: test-and-package
+  # Deploy:
+  #   runs-on: ubuntu-latest
+  #   needs: test-and-package
 
-    steps:
+  #   steps:
 
-      - name: Deploy to EC2
-        uses: appleboy/ssh-action@v0.1.5
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
-            aws configure set aws_access_key_id ${{secrets.AWS_ACCESS_KEY_ID }}
-            aws configure set aws_secret_access_key ${{secrets.AWS_SECRET_ACCESS_KEY }}
-            aws configure set default.region eu-north-1
 
-            aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 843369994444.dkr.ecr.eu-north-1.amazonaws.com
-            
-            docker pull 843369994444.dkr.ecr.eu-north-1.amazonaws.com/text-classification:latest
-            docker stop text-classification || true
-            docker rm text-classification || true
-            docker run -d -p 80:5000 -e DAGSHUB_PAT=${{ secrets.DAGSHUB_PAT }} --name text-classification 843369994444.dkr.ecr.eu-north-1.amazonaws.com/text-classification:latest
+      # Zip the required files
+      - name: Zip files for deployment
+        run: |
+          zip -r deployment.zip appspec.yml deploy/scripts/install_dependencies.sh deploy/scripts/start_docker.sh
+
+      # Upload the ZIP file to S3
+      - name: Upload ZIP to S3
+        if: success()
+        run: |
+          aws s3 cp deployment.zip s3://text-classification-appspec-bucket/deployment.zip
+
+      # Deploy to AWS CodeDeploy using the uploaded ZIP file
+      - name: Deploy to AWS CodeDeploy
+        if: success()
+        run: |
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws deploy create-deployment \
+            --application-name MyDockerApp \
+            --deployment-config-name CodeDeployDefault.OneAtATime \
+            --deployment-group-name MyDeploymentGroup \
+            --s3-location bucket=text-classification-appspec-bucket,key=deployment.zip,bundleType=zip \
+            --file-exists-behavior OVERWRITE \
+            --region eu-north-1
+  
